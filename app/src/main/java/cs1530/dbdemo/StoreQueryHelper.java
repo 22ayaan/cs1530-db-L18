@@ -67,7 +67,7 @@ public class StoreQueryHelper {
         try (Statement st = databaseConnection.createStatement()) {
             st.setQueryTimeout(QUERY_TIMEOUT); // set timeout to 30 seconds
             // TODO: Replace the Null assignment below with the SQL query to retrieve all stores
-            ResultSet rs = null;
+            ResultSet rs = st.executeQuery("SELECT * FROM STORE");
             while (rs != null && rs.next()) {
                 Store currentStore = buildStoreFromRow(rs);
                 storeList.add(currentStore);
@@ -88,10 +88,10 @@ public class StoreQueryHelper {
     protected List<RowInterface> findByStoreNumber(int storeNumber) {
         List<RowInterface> storeList = new ArrayList<>();
         // TODO: Fill-In the SQL statement below to filter for rows with a given storeNumber
-        try (PreparedStatement st = databaseConnection.prepareStatement("FILL IN THIS PART")) {
+        try (PreparedStatement st = databaseConnection.prepareStatement("SELECT * FROM STORE WHERE storeNumber = ?")) {
             st.setQueryTimeout(QUERY_TIMEOUT);
             // TODO: Given the updated SQL statement, set the storeNumber parameter
-
+            st.setInt(1, storeNumber);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Store currentStore = buildStoreFromRow(rs);
@@ -113,10 +113,10 @@ public class StoreQueryHelper {
     protected List<RowInterface> findByStoreType(String storeType) {
         List<RowInterface> storeList = new ArrayList<>();
         // TODO: Fill-In the SQL statement below to filter for rows with a given storeType
-        try (PreparedStatement st = databaseConnection.prepareStatement("FILL IN THIS PART")) {
+        try (PreparedStatement st = databaseConnection.prepareStatement("SELECT * FROM STORE WHERE storeType = ?")) {
             st.setQueryTimeout(QUERY_TIMEOUT);
             // TODO: Given the updated SQL statement, set the storeType parameter
-
+            st.setString(1, storeType);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Store currentStore = buildStoreFromRow(rs);
@@ -140,10 +140,11 @@ public class StoreQueryHelper {
     protected List<RowInterface> findByCityAndState(String city, String state) {
         List<RowInterface> storeList = new ArrayList<>();
         // TODO: Fill-In the SQL statement below to filter for rows with a given city and state
-        try (PreparedStatement st = databaseConnection.prepareStatement("FILL IN THIS PART")) {
+        try (PreparedStatement st = databaseConnection.prepareStatement("SELECT * FROM STORE WHERE city = ? AND state = ?")) {
             st.setQueryTimeout(QUERY_TIMEOUT);
             // TODO: Given the updated SQL statement, set the city and state parameters
-
+            st.setString(1, city);
+            st.setString(2, state);
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
